@@ -136,8 +136,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>mời người đẹp chọn món</h1>
-        <p>hy vọng bé ly ăn ngon miệng</p>
+        <h1>menu</h1>
+        <p>chọn món nào</p>
         <div id="status"></div>
         <div class="card-grid" id="cardGrid"></div>
         <div class="controls">
@@ -148,7 +148,7 @@
     <script>
         const suits = [{s:'♥',c:'hearts'},{s:'♦',c:'diamonds'},{s:'♣',c:'clubs'},{s:'♠',c:'spades'}];
         const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-        const foods = ["Phở Bò ","Cơm Tấm Sườn Nướng","Tacos","Nem Nướng Nha Trang","Bún Chả Hà Nội","Cơm rang dưa bò","Bún Bò Huế","Bánh Cuốn Nóng","Mì Ý ","Pizza ","Cơm Thố Xá Xíu","Mì Lạnh","Cơm Sườn","Cơm Tấm","Bánh Cuốn Chả","Hủ Tiếu Nam Vang","Bún Thịt Nướng","Bánh Canh Cua","Mì Quảng Gà","Bánh Xèo Tôm","Đức qua chở đi ăn","Bánh Mì Chảo ","Bún Thang Hà Nội","Miến Gà Trộn","Mì Trộn Xá Xíu","Cơm Sườn Chua Ngọt","Bánh Mì Sài Gòn","Bánh Đa Cua","Bánh Khọt","Bún Cá Cay","Cơm Gà Hải Nam","Phở Gà Trộn","Mì Hoành Thánh","Bánh Giò Chả Quế","Xôi Xéo Chả Lụa","Bún Mọc","Bánh Đa Trộn","Bánh Mì Thịt Nướng","Cơm Đùi Gà Hấp","Hủ Tiếu Gõ","Bánh Bèo Chén","Mì Cay Hải Sản","Bánh Ướt Lòng Gà","Cơm Tấm Chả Trứng","Bún Chả Cá","Cơm Bò Lúc Lắc","Cơm Thịt Nướng","Bánh Mì Que Giò","Mì Tôm Chanh Bò","Bún Ốc Chuối Đậu","Cơm Gà Thượng Hải","Miến Lươn Trộn"];
+        const foods = ["Phở Bò ","Bánh Tráng","Tacos","Nem Nướng Nha Trang","Bún Chả Hà Nội","Cơm rang dưa bò","Bún Bò Huế","Bánh Cuốn Nóng","Mì Ý ","Pizza ","Cơm Thố Xá Xíu","Mì Lạnh","Cơm Sườn","Cơm Tấm","Bánh Cuốn Chả","Hủ Tiếu Nam Vang","Bún Thịt Nướng","Bánh Canh Cua","Mì Quảng Gà","Bánh Xèo Tôm","Đức qua chở đi ăn","Bánh Mì Chảo ","Bún Thang Hà Nội","Miến Gà Trộn","Mì Trộn Xá Xíu","Cơm Sườn Chua Ngọt","Bánh Mì Sài Gòn","Bánh Đa Cua","Jollibee","Bún Cá Cay","Cơm Gà Hải Nam","Phở Gà Trộn","Mì Hoành Thánh","Bánh Giò Chả Quế","KimBap","Bún Mọc","Bánh Đa Trộn","Bánh Mì Thịt Nướng","Bún Riêu","Hủ Tiếu Gõ","Bánh Bèo Chén","Mì Cay Hải Sản","Cháo","Xôi","Bún Chả Cá","Cơm Bò Lúc Lắc","Cơm Thịt Nướng","Bánh Mì Que Giò","Mì Tôm Chanh Bò","Bún Ốc Chuối Đậu","Cơm Gà Thượng Hải","Mỳ Bò Đài Loan"];
         let isShuffled = false;
 
         function init() {
