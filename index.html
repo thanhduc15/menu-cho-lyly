@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Dành Riêng Cho Bé Ly</title>
+    <title>Lì Xì May Mắn Cho Bé Ly</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -43,201 +43,183 @@
         h1 { color: #F06292; margin: 0; font-size: 1.8em; }
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
             margin: 15px 0;
-            height: 420px;
-            padding: 15px;
+            height: 380px;
+            padding: 20px;
             background: rgba(255, 245, 248, 0.5);
             border-radius: 15px;
             perspective: 2000px;
             position: relative;
             overflow-y: auto;
-            overflow-x: hidden;
         }
         .card {
             aspect-ratio: 2/3;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), top 0.8s, left 0.8s;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            z-index: 1;
         }
         .card.init-face-up { transform: rotateY(180deg); }
         .card-face {
             position: absolute;
             width: 100%; height: 100%;
             backface-visibility: hidden;
-            border-radius: 6px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 6px;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
             box-sizing: border-box;
-            border: 1px solid #F8BBD0;
+            border: 2px solid #F8BBD0;
             box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
         }
         .card-back {
             background: #F06292;
-            background-image: repeating-linear-gradient(45deg, #f48fb1 0, #f48fb1 1px, transparent 0, transparent 50%);
-            background-size: 8px 8px;
-            color: white; font-size: 1.5em;
-            display: flex; justify-content: center; align-items: center;
+            background-image: radial-gradient(circle, #f48fb1 20%, transparent 20%);
+            background-size: 10px 10px;
+            color: white; font-size: 2.5em;
         }
         .card-front {
             background: white;
             transform: rotateY(180deg);
+            color: #E91E63;
+            font-weight: 700;
+            font-size: 1.1em;
         }
-        .hearts, .diamonds { color: #E91E63; }
-        .clubs, .spades { color: #4A4A4A; }
-
-        /* Animation xào bài quay quay */
-        @keyframes deckRotate {
-            from { transform: translate(var(--tx), var(--ty)) rotate(0deg); }
-            to { transform: translate(var(--tx), var(--ty)) rotate(360deg); }
-        }
-
-        /* Animation lá bài được chọn bay ra giữa màn hình */
-        .winner-spin {
-            position: fixed !important;
+        .shuffling-stack {
+            position: absolute !important;
             top: 50% !important;
             left: 50% !important;
-            width: 180px !important;
-            height: 270px !important;
-            margin-top: -135px !important;
-            margin-left: -90px !important;
+            margin-top: -75px;
+            margin-left: -50px;
+            transform: translate(0, 0) rotateY(0deg) !important;
+            z-index: 100 !important;
+        }
+        @keyframes deckRotate {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(0, 0) rotate(360deg); }
+        }
+        .winner-spin {
+            position: fixed !important;
+            top: 40% !important;
+            left: 50% !important;
+            width: 200px !important;
             z-index: 10000 !important;
             animation: finalFlip 1.2s forwards !important;
         }
-
         @keyframes finalFlip {
-            0% { transform: scale(0.8) rotate(0deg); }
-            50% { transform: scale(1.4) rotate(720deg); }
-            100% { transform: scale(1.2) rotateY(180deg); }
+            0% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.4) rotate(720deg); }
+            100% { transform: translate(-50%, -50%) scale(1.2) rotateY(180deg); }
         }
-
-        .controls { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
         button {
-            background-color: #F06292;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1em;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
+            background-color: #F06292; color: white; border: none;
+            padding: 12px 30px; font-size: 1.1em; font-weight: 700;
+            border-radius: 50px; cursor: pointer; transition: 0.3s;
             box-shadow: 0 4px 15px rgba(240,98,146,0.3);
-            transition: 0.3s;
         }
         button:disabled { background-color: #f8bbd0; cursor: not-allowed; }
-        button.secondary { background-color: #BA55D3; }
         #status { margin: 10px 0; font-weight: 700; color: #D81B60; min-height: 24px; }
+        .love-msg {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #C2185B;
+            line-height: 1.5;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>menu</h1>
-        <p>chọn món nào</p>
+        <h1>Lì Xì May Mắn Cho Bé Ly</h1>
+        <p>Chọn một bao lì xì duy nhất nhé người đẹp! ✨</p>
         <div id="status"></div>
         <div class="card-grid" id="cardGrid"></div>
-        <div class="controls">
-            <button id="actionBtn" onclick="startShuffle()">Xào bài ngay!</button>
-            <button id="retryBtn" class="secondary" style="display: none;" onclick="resetSelection()">hợp khẩu vị khum , chọn lại nhé!</button>
+        <button id="actionBtn" onclick="startShuffle()">Xào bài & Nhận lì xì!</button>
+        <div id="loveMsg" class="love-msg">
+            "Cảm ơn Ly vì đã mang lại tình yêu cho mình, mong rằng hai đứa được đón nhiều cái tết cùng nhau nữa, hy vọng năm nay của cả 2 đều thuận buồm xuôi gió, tớ yêu cậu nhiều." ❤️
         </div>
     </div>
     <script>
-        const suits = [{s:'♥',c:'hearts'},{s:'♦',c:'diamonds'},{s:'♣',c:'clubs'},{s:'♠',c:'spades'}];
-        const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-        const foods = ["Phở Bò ","Bánh Tráng","Tacos","Nem Nướng Nha Trang","Bún Chả Hà Nội","Cơm rang dưa bò","Bún Bò Huế","Bánh Cuốn Nóng","Mì Ý ","Pizza ","Cơm Thố Xá Xíu","Mì Lạnh","Cơm Sườn","Cơm Tấm","Bánh Cuốn Chả","Hủ Tiếu Nam Vang","Bún Thịt Nướng","Bánh Canh Cua","Mì Quảng Gà","Bánh Xèo Tôm","Đức qua chở đi ăn","Bánh Mì Chảo ","Bún Thang Hà Nội","Miến Gà Trộn","Mì Trộn Xá Xíu","Cơm Sườn Chua Ngọt","Bánh Mì Sài Gòn","Bánh Đa Cua","Jollibee","Bún Cá Cay","Cơm Gà Hải Nam","Phở Gà Trộn","Mì Hoành Thánh","Bánh Giò Chả Quế","KimBap","Bún Mọc","Bánh Đa Trộn","Bánh Mì Thịt Nướng","Bún Riêu","Hủ Tiếu Gõ","Bánh Bèo Chén","Mì Cay Hải Sản","Cháo","Xôi","Bún Chả Cá","Cơm Bò Lúc Lắc","Cơm Thịt Nướng","Bánh Mì Que Giò","Mì Tôm Chanh Bò","Bún Ốc Chuối Đậu","Cơm Gà Thượng Hải","Mỳ Bò Đài Loan"];
+        const luckyAmounts = [
+            "168.000 VND", "268.000 VND", "520.000 VND", "666.000 VND", 
+            "888.000 VND", "999.000 VND", "1.314.000 VND", "521.000 VND",
+            "686.800 VND", "868.600 VND"
+        ];
         let isShuffled = false;
+        let hasPicked = false;
 
         function init() {
             const grid = document.getElementById('cardGrid');
             grid.innerHTML = '';
-            let fIdx = 0;
-            suits.forEach(s => {
-                ranks.forEach(r => {
-                    const data = {suit:s.s, class:s.c, rank:r, name:foods[fIdx]||"Món Ngon"};
-                    const div = document.createElement('div');
-                    div.className = 'card init-face-up';
-                    div.onclick = () => pickCard(div, data);
-                    div.innerHTML = `
-                        <div class="card-face card-back">❤</div>
-                        <div class="card-face card-front ${s.c}">
-                            <div style="text-align:left;font-size:0.8em"><b>${r}</b><br>${s.s}</div>
-                            <div style="font-size:0.8em;font-weight:700">${data.name}</div>
-                            <div style="transform:rotate(180deg);text-align:left;font-size:0.8em"><b>${r}</b><br>${s.s}</div>
-                        </div>`;
-                    grid.appendChild(div);
-                    fIdx++;
-                });
+            luckyAmounts.forEach((amount, idx) => {
+                const div = document.createElement('div');
+                div.className = 'card init-face-up';
+                div.onclick = () => pickCard(div, amount);
+                div.innerHTML = `
+                    <div class="card-face card-back">🧧</div>
+                    <div class="card-face card-front">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">🧧</div>
+                        <div>${amount}</div>
+                    </div>`;
+                grid.appendChild(div);
             });
         }
 
         function startShuffle() {
             const btn = document.getElementById('actionBtn');
             const status = document.getElementById('status');
-            const grid = document.getElementById('cardGrid');
             const cards = document.querySelectorAll('.card');
-            
             btn.disabled = true;
-            status.innerText = "Gom bài về tâm...";
-
-            const gridRect = grid.getBoundingClientRect();
-            const centerX = gridRect.width / 2;
-            const centerY = gridRect.height / 2;
-
-            cards.forEach(c => {
-                const tx = centerX - (c.offsetLeft + c.offsetWidth / 2);
-                const ty = centerY - (c.offsetTop + c.offsetHeight / 2);
-                c.style.setProperty('--tx', `${tx}px`);
-                c.style.setProperty('--ty', `${ty}px`);
-                
-                c.classList.remove('init-face-up');
-                c.style.transform = `translate(${tx}px, ${ty}px)`;
-                c.style.zIndex = "100";
+            status.innerText = "Gom bao lì xì...";
+            cards.forEach(c => { 
+                c.classList.remove('init-face-up'); 
+                c.classList.add('shuffling-stack');
             });
-
             setTimeout(() => {
-                status.innerText = "Đang xào bài quay quay...";
+                status.innerText = "Đang xào bài may mắn...";
                 cards.forEach(c => c.style.animation = "deckRotate 0.8s infinite linear");
-                
                 setTimeout(() => {
-                    status.innerText = "Mời người đẹp chọn món!";
+                    status.innerText = "Mời Bé Ly bốc một bao lì xì duy nhất!";
                     cards.forEach(c => { 
                         c.style.animation = "none";
-                        c.style.transform = "translate(0, 0)";
-                        c.style.zIndex = "1";
+                        c.classList.remove('shuffling-stack');
                     });
                     isShuffled = true;
                 }, 2000);
-            }, 800);
+            }, 1000);
         }
 
-        function pickCard(el, data) {
-            if (!isShuffled || el.classList.contains('winner-spin')) return;
+        function pickCard(el, amount) {
+            if (!isShuffled || hasPicked || el.classList.contains('winner-spin')) return;
+            hasPicked = true;
             const status = document.getElementById('status');
-            const retryBtn = document.getElementById('retryBtn');
+            const loveMsg = document.getElementById('loveMsg');
+            const actionBtn = document.getElementById('actionBtn');
             
             el.classList.add('winner-spin');
-            status.innerText = "Đang mở lá bài...";
+            status.innerText = "Mở lì xì nào...";
+            actionBtn.style.display = "none";
 
             setTimeout(() => {
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#F06292', '#FFFFFF'] });
-                status.innerHTML = `✨ Bé Ly chọn được: <span style="color:#E91E63">${data.name}</span> ✨`;
-                retryBtn.style.display = "block";
+                confetti({ 
+                    particleCount: 200, 
+                    spread: 90, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#FFD700', '#F06292', '#FFFFFF'] 
+                });
+                status.innerHTML = `🧧 Bé Ly nhận được: <span style="color:#E91E63">${amount}</span> 🧧`;
+                loveMsg.style.display = "block";
             }, 1200);
         }
-
-        function resetSelection() {
-            const winner = document.querySelector('.winner-spin');
-            const status = document.getElementById('status');
-            const retryBtn = document.getElementById('retryBtn');
-            if(winner) winner.classList.remove('winner-spin');
-            status.innerText = "Mời người đẹp chọn lại món khác!";
-            retryBtn.style.display = "none";
-        }
-
         window.onload = init;
     </script>
 </body>
